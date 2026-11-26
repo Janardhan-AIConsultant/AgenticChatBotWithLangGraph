@@ -331,6 +331,20 @@ class ChatState(TypedDict):
 def chat_node(state: ChatState):
     """LLM node that can answer directly or call an appropriate tool."""
 
+    # The LLM cannot see uploads, so tell it whether a PDF has been indexed
+    if os.path.exists("faiss_db/index.faiss"):
+        document_status = (
+            "A PDF document HAS been uploaded and indexed, and `rag_tool` can read it. "
+            "If a question could be answered by this document, even if the user does not "
+            "mention a PDF, call `rag_tool` before answering. "
+            "This applies even if you said earlier in the conversation that no document was available. "
+        )
+    else:
+        document_status = (
+            "No PDF has been uploaded yet. "
+            "If the user asks about a PDF or document, ask them to upload it. "
+        )
+
     system_message = SystemMessage(
         content=(
             "You are a helpful Agentic Chatbot with access to several tools.\n\n"
@@ -348,7 +362,7 @@ def chat_node(state: ChatState):
 
             "Answer general questions directly when no tool is required. "
             "Do not invent information from the uploaded document. "
-            "If the user asks about a PDF but no document is available, ask them to upload a PDF. "
+            f"{document_status}"
             "After receiving a tool result, provide a clear and helpful final answer."
         )
     )
