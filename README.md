@@ -104,15 +104,13 @@ pip install -r requirements.txt
 
 ### Configuration
 
-Create a `.env` file in the project root:
+Copy `.env.example` to `.env` in the project root (`cp .env.example .env`), then fill in your values. The main settings are:
 
 ```env
 GROQ_API_KEY=your_groq_api_key
 GROQ_MODEL=your_groq_model_id
 TAVILY_API_KEY=your_tavily_api_key
-OPENWEATHER_API_KEY=your_openweather_api_key
-ALPHAVANTAGE_API_KEY=your_alphavantage_api_key
-```
+OPENWEATHER_API_KEY=your_openweather_api_key```
 
 | Variable | Required | Description |
 | --- | --- | --- |
@@ -120,9 +118,10 @@ ALPHAVANTAGE_API_KEY=your_alphavantage_api_key
 | `GROQ_MODEL` | Yes | ID of a Groq model that supports tool calling |
 | `TAVILY_API_KEY` | Yes | Tavily API key for web search |
 | `OPENWEATHER_API_KEY` | For weather | OpenWeather API key |
-| `ALPHAVANTAGE_API_KEY` | For stock prices | [Alpha Vantage](https://www.alphavantage.co/support/#api-key) API key |
 | `GROQ_BASE_URL` | No | Defaults to `https://api.groq.com` |
 | `GROQ_TEMPERATURE` | No | Defaults to `0` |
+
+For stock prices, get an [Alpha Vantage API key](https://www.alphavantage.co/support/#api-key) and replace `YOUR_ALPHAVANTAGE_API_KEY` in `backend.py` on your machine. Don't commit your real key.
 
 ### Run
 
@@ -152,6 +151,7 @@ Use **New Chat** in the sidebar to start a conversation, or select a thread ID t
 ├── app.py              # Streamlit UI, PDF upload, approval buttons
 ├── backend.py          # LLM, tools, RAG, LangGraph graph, checkpointer
 ├── requirements.txt    # Python dependencies
+├── .env.example        # Sample settings with placeholders
 ├── LICENSE
 └── README.md
 ```
